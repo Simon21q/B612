@@ -1,0 +1,1883 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 70%,
+            #172554 0%,
+            #080d21 45%,
+            #02040d 100%
+        );
+
+    color: #f5f1e8;
+}
+.world {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+    padding: 24px;
+}
+
+.welcome {
+    width: min(90%, 700px);
+}
+
+.coordinates {
+    margin-bottom: 18px;
+
+    font-size: 12px;
+    letter-spacing: 0.35em;
+
+    color: rgba(245, 241, 232, 0.55);
+}
+
+.welcome h1 {
+    margin-bottom: 24px;
+
+    font-size: clamp(64px, 10vw, 120px);
+    font-weight: 300;
+    letter-spacing: 0.12em;
+
+    color: #f5f1e8;
+
+    text-shadow:
+        0 0 20px rgba(255, 255, 255, 0.18),
+        0 0 60px rgba(120, 150, 255, 0.15);
+}
+
+.chinese {
+    margin-bottom: 10px;
+
+    font-size: clamp(17px, 2vw, 21px);
+    letter-spacing: 0.08em;
+
+    color: rgba(245, 241, 232, 0.9);
+}
+
+.french {
+    margin-bottom: 42px;
+
+    font-size: clamp(14px, 1.5vw, 17px);
+    font-style: italic;
+    line-height: 1.7;
+
+    color: rgba(245, 241, 232, 0.58);
+}
+#startButton {
+    padding: 13px 26px;
+
+    border: 1px solid rgba(245, 241, 232, 0.28);
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(8px);
+
+    color: #f5f1e8;
+
+    font-size: 14px;
+    letter-spacing: 0.08em;
+
+    cursor: pointer;
+
+    transition:
+        background 0.4s ease,
+        border-color 0.4s ease,
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+#startButton span {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 11px;
+    font-style: italic;
+
+    color: rgba(245, 241, 232, 0.55);
+}
+
+#startButton:hover {
+    background: rgba(255, 255, 255, 0.10);
+
+    border-color: rgba(245, 241, 232, 0.55);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 30px rgba(80, 110, 200, 0.15);
+}
+#stars {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+
+    width: 2px;
+    height: 2px;
+
+    border-radius: 50%;
+
+    background: #fffdf4;
+
+    box-shadow:
+        0 0 4px rgba(255, 253, 244, 0.5);
+
+    animation: twinkle 4s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+
+    0%,
+    100% {
+        opacity: 0.15;
+        transform: scale(0.8);
+    }
+
+    50% {
+        opacity: 0.9;
+        transform: scale(1.2);
+    }
+}
+.scene {
+    display: none;
+}
+
+.scene.active {
+    display: block;
+}
+
+.planet-scene {
+    text-align: center;
+}
+
+.planet-label {
+    margin-bottom: 18px;
+
+    font-size: 12px;
+    letter-spacing: 0.35em;
+
+    color: rgba(245, 241, 232, 0.55);
+}
+
+.planet-scene h2 {
+    margin-bottom: 12px;
+
+    font-size: clamp(38px, 4.6vw, 60px);
+    font-weight: 300;
+    letter-spacing: 0.08em;
+}
+
+.planet-subtitle {
+    font-size: 15px;
+    font-style: italic;
+
+    color: rgba(245, 241, 232, 0.55);
+}
+.planet-scene {
+    width: 100%;
+}
+
+.planet-intro {
+    position: relative;
+    z-index: 5;
+
+    width: min(42vw, 620px);
+
+    margin-left: 7vw;
+    margin-right: auto;
+    margin-bottom: 35px;
+
+    text-align: left;
+}
+
+.b612-world {
+    position: relative;
+
+    width: min(78vw, 620px);
+    aspect-ratio: 1;
+
+    margin: 0 auto;
+}
+
+.planet-glow {
+    position: absolute;
+
+    width: 155%;
+    height: 155%;
+
+    left: 43%;
+    top: 7%;
+
+    border-radius: 50%;
+
+    background: rgba(80, 110, 190, 0.14);
+
+    filter: blur(65px);
+}
+
+.planet {
+    position: absolute;
+
+    width: 145%;
+    height: 145%;
+
+    left: 48%;
+    top: 12%;
+
+    /* 不再是完美圆形：做成轻微不规则的小行星 */
+    border-radius:
+        48% 52% 46% 54% /
+        52% 47% 53% 48%;
+
+    /* B612 本体：灰蓝、岩石、柔和光照 */
+    background-image:
+    radial-gradient(
+        circle at 30% 24%,
+        rgba(255, 255, 255, 0.20) 0%,
+        rgba(255, 255, 255, 0.08) 22%,
+        rgba(20, 24, 30, 0.05) 48%,
+        rgba(5, 8, 15, 0.42) 76%,
+        rgba(0, 0, 0, 0.72) 100%
+    ),
+    url("images/b612-surface.png");
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+
+    box-shadow:
+    /* 星球外缘第一层：贴着地平线 */
+    0 0 10px rgba(180, 195, 255, 0.38),
+
+    /* 第二层：柔和蓝光 */
+    0 0 35px rgba(90, 120, 220, 0.28),
+
+    /* 第三层：扩散进宇宙 */
+    0 0 90px rgba(55, 85, 190, 0.20),
+
+    /* 星球内部边缘压暗，让它更像球 */
+    inset -80px -60px 130px rgba(0, 0, 0, 0.32);
+    transition:
+    transform 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 1.2s ease;
+}
+/* B612 surface details */
+.planet::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    border-radius: inherit;
+
+    background:
+        /* tiny crater - upper left */
+        radial-gradient(
+            ellipse at 27% 32%,
+            rgba(35, 39, 38, 0.16) 0%,
+            rgba(35, 39, 38, 0.08) 20%,
+            transparent 23%
+        ),
+ene h2
+        /* small crater - right */
+        radial-gradient(
+            ellipse at 72% 43%,
+            rgba(30, 34, 34, 0.13) 0%,
+            rgba(30, 34, 34, 0.06) 16%,
+            transparent 20%
+        ),
+
+        /* very subtle hollow - lower left */
+        radial-gradient(
+            ellipse at 35% 72%,
+            rgba(25, 29, 29, 0.12) 0%,
+            transparent 18%
+        ),
+
+        /* faint warm soil */
+        radial-gradient(
+            ellipse at 60% 25%,
+            rgba(214, 184, 125, 0.07) 0%,
+            transparent 24%
+        );
+
+    opacity: 0.8;
+
+    pointer-events: none;
+    z-index: 1;
+}
+.planet::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    border-radius: inherit;
+
+    background-image:
+    radial-gradient(
+    circle at 27% 22%,
+    rgba(255, 248, 225, 0.18) 0%,
+    rgba(255, 248, 225, 0.08) 22%,
+    rgba(255, 255, 255, 0.01) 42%,
+    rgba(5, 8, 18, 0.18) 62%,
+    rgba(2, 4, 12, 0.55) 82%,
+    rgba(0, 0, 0, 0.72) 100%
+),
+        radial-gradient(
+            circle at 18% 58%,
+            rgba(255, 244, 210, 0.16) 0 1px,
+            transparent 1.5px
+        ),
+        radial-gradient(
+            circle at 43% 19%,
+            rgba(255, 244, 210, 0.11) 0 1px,
+            transparent 1.5px
+        ),
+        radial-gradient(
+            circle at 81% 61%,
+            rgba(255, 244, 210, 0.10) 0 1px,
+            transparent 1.5px
+        ),
+        radial-gradient(
+            circle at 57% 77%,
+            rgba(20, 24, 24, 0.12) 0 1.5px,
+            transparent 2px
+        );
+
+    pointer-events: none;
+    z-index: 2;
+}
+@keyframes planetFloat {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+.place {
+    position: absolute;
+
+    width: 420px;
+    height: 82px;
+
+    display: flex;
+    align-items: center;
+    gap: 24px;
+
+    padding: 0 28px;
+
+    text-align: left;
+    cursor: pointer;
+
+    z-index: 5;
+
+    opacity: 0.35;
+
+    border-top: 1px solid rgba(245, 241, 232, 0.08);
+
+    transition:
+        transform 0.45s ease,
+        opacity 0.45s ease,
+        filter 0.45s ease,
+        border-color 0.45s ease;
+}
+.place.active {
+    opacity: 1;
+    filter: brightness(1.08);
+
+    transform: translateX(-28px);
+
+    border-color: rgba(245, 241, 232, 0.9);
+}
+.place:hover {
+    opacity: 0.8;
+    transform: translateX(-10px);
+    filter: brightness(1.08);
+}
+
+.place-icon {
+    margin-bottom: 5px;
+
+    font-size: clamp(30px, 4vw, 48px);
+}
+
+.place p {
+    font-size: 13px;
+
+    color: rgba(245, 241, 232, 0.9);
+}
+
+.place span {
+    display: block;
+
+    margin-top: 2px;
+
+    font-size: 10px;
+    font-style: italic;
+
+    color: rgba(245, 241, 232, 0.5);
+}
+
+
+.fox-place {
+    left: -250px;
+    top: 18%;
+}
+
+.rose-place {
+    left: -250px;
+    top: 28%;
+}
+
+.lamp-place {
+    left: -250px;
+    top: 38%;
+}
+
+.fox-content {
+    width: min(90vw, 760px);
+    margin: 0 auto;
+}
+
+.scene-label {
+    margin-bottom: 18px;
+
+    font-size: 12px;
+    letter-spacing: 0.35em;
+
+    color: rgba(245, 241, 232, 0.5);
+}
+
+.fox-content h2 {
+    margin-bottom: 10px;
+
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+}
+
+.scene-french {
+    margin-bottom: 60px;
+
+    font-size: 14px;
+    font-style: italic;
+
+    color: rgba(245, 241, 232, 0.5);
+}
+
+.letters {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: clamp(35px, 7vw, 90px);
+}
+
+.letter {
+    cursor: pointer;
+
+    transition:
+        transform 0.4s ease,
+        filter 0.4s ease;
+}
+
+.letter:hover {
+    transform: translateY(-8px) rotate(-2deg);
+
+    filter: brightness(1.2);
+}
+
+.envelope {
+    margin-bottom: 8px;
+
+    font-size: clamp(48px, 7vw, 78px);
+
+    color: #e9dfca;
+
+    text-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.letter span {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+
+    color: rgba(245, 241, 232, 0.4);
+}
+.back-button {
+    position: fixed;
+
+    top: 28px;
+    left: 32px;
+
+    padding: 10px 16px;
+
+    border: none;
+    background: transparent;
+
+    color: rgba(245, 241, 232, 0.65);
+
+    font-size: 12px;
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        color 0.3s ease,
+        transform 0.3s ease;
+}
+
+.back-button span {
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 9px;
+    font-style: italic;
+
+    opacity: 0.55;
+}
+
+.back-button:hover {
+    color: #f5f1e8;
+
+    transform: translateX(-3px);
+}
+.rose-scene {
+    width: 100%;
+    text-align: center;
+}
+
+.rose-content {
+    width: min(90vw, 900px);
+    margin: 0 auto;
+}
+
+.rose-content h2 {
+    margin-bottom: 10px;
+
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+}
+
+.garden {
+    position: relative;
+
+    width: 100%;
+    min-height: 280px;
+
+    margin: 35px auto 30px;
+
+    border-bottom: 1px solid rgba(245, 241, 232, 0.15);
+}
+
+.empty-garden {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    font-size: 14px;
+
+    color: rgba(245, 241, 232, 0.45);
+}
+
+.empty-garden span {
+    display: block;
+
+    margin-top: 7px;
+
+    font-size: 11px;
+    font-style: italic;
+
+    opacity: 0.65;
+}
+
+.plant-button {
+    padding: 12px 22px;
+
+    border: 1px solid rgba(245, 241, 232, 0.25);
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    color: rgba(245, 241, 232, 0.85);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.35s ease,
+        background 0.35s ease;
+}
+
+.plant-button span {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 10px;
+    font-style: italic;
+
+    opacity: 0.55;
+}
+
+.plant-button:hover {
+    transform: translateY(-3px);
+
+    background: rgba(255, 255, 255, 0.08);
+}
+.rose-modal {
+    position: fixed;
+    inset: 0;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background: rgba(2, 4, 13, 0.72);
+    backdrop-filter: blur(10px);
+
+    z-index: 100;
+}
+
+.rose-modal.open {
+    display: flex;
+}
+
+.rose-note {
+    position: relative;
+
+    width: min(90vw, 520px);
+
+    padding: 42px 38px 36px;
+
+    border: 1px solid rgba(245, 241, 232, 0.15);
+    border-radius: 20px;
+
+    background: rgba(19, 27, 55, 0.82);
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.35);
+
+    text-align: center;
+}
+
+.close-note {
+    position: absolute;
+
+    top: 14px;
+    right: 18px;
+
+    border: none;
+    background: transparent;
+
+    color: rgba(245, 241, 232, 0.5);
+
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.note-label {
+    margin-bottom: 16px;
+
+    font-size: 10px;
+    letter-spacing: 0.3em;
+
+    color: rgba(245, 241, 232, 0.4);
+}
+
+.rose-note h3 {
+    margin-bottom: 8px;
+
+    font-size: 22px;
+    font-weight: 300;
+}
+
+.note-french {
+    margin-bottom: 28px;
+
+    font-size: 12px;
+    font-style: italic;
+
+    color: rgba(245, 241, 232, 0.45);
+}
+
+#roseText {
+    width: 100%;
+    min-height: 130px;
+
+    padding: 16px;
+
+    border: 1px solid rgba(245, 241, 232, 0.13);
+    border-radius: 12px;
+
+    outline: none;
+    resize: none;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    color: #f5f1e8;
+
+    font: inherit;
+    line-height: 1.7;
+}
+
+#roseText::placeholder {
+    color: rgba(245, 241, 232, 0.25);
+}
+
+#roseText:focus {
+    border-color: rgba(245, 241, 232, 0.35);
+}
+
+.save-rose {
+    margin-top: 22px;
+
+    padding: 11px 24px;
+
+    border: 1px solid rgba(245, 241, 232, 0.22);
+    border-radius: 999px;
+
+    background: transparent;
+    color: #f5f1e8;
+
+    cursor: pointer;
+}
+
+.save-rose span {
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 9px;
+    font-style: italic;
+
+    opacity: 0.5;
+}
+.planted-rose {
+    position: absolute;
+
+    bottom: 0;
+
+    transform: translateX(-50%);
+
+    text-align: center;
+
+    cursor: pointer;
+
+    animation: roseGrow 0.8s ease-out;
+}
+
+.rose-flower {
+    font-size: 42px;
+
+    transform-origin: bottom center;
+
+    transition: transform 0.35s ease;
+}
+
+.planted-rose:hover .rose-flower {
+    transform: scale(1.15) rotate(-3deg);
+}
+
+.planted-rose span {
+    display: block;
+
+    margin-top: 7px;
+
+    font-size: 9px;
+
+    color: rgba(245, 241, 232, 0.35);
+}
+
+
+@keyframes roseGrow {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateX(-50%)
+            translateY(15px)
+            scale(0.4);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateX(-50%)
+            translateY(0)
+            scale(1);
+    }
+}
+.lamp-scene {
+    width: 100%;
+    text-align: center;
+}
+
+.lamp-content {
+    width: min(90vw, 760px);
+    margin: 0 auto;
+}
+
+.lamp-content h2 {
+    margin-bottom: 10px;
+
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+}
+
+.lamp-world {
+    position: relative;
+
+    width: 260px;
+    height: 300px;
+
+    margin: 25px auto 10px;
+}
+
+.street-lamp {
+    position: absolute;
+
+    left: 50%;
+    bottom: 10px;
+
+    transform: translateX(-50%);
+
+    z-index: 2;
+}
+
+.lamp-head {
+    width: 72px;
+    height: 52px;
+
+    border: 2px solid rgba(245, 241, 232, 0.7);
+    border-radius: 12px 12px 20px 20px;
+
+    background: rgba(255, 218, 135, 0.85);
+
+    box-shadow:
+        0 0 20px rgba(255, 210, 110, 0.65),
+        0 0 55px rgba(255, 190, 80, 0.35);
+
+    transition:
+        background 1.5s ease,
+        box-shadow 1.5s ease;
+}
+
+.lamp-pole {
+    width: 4px;
+    height: 170px;
+
+    margin: 0 auto;
+
+    background: rgba(245, 241, 232, 0.55);
+}
+
+.lamp-base {
+    width: 42px;
+    height: 5px;
+
+    margin: 0 auto;
+
+    border-radius: 50%;
+
+    background: rgba(245, 241, 232, 0.45);
+}
+.lamp-light {
+    position: absolute;
+
+    width: 220px;
+    height: 220px;
+
+    left: 50%;
+    top: 0;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 218, 135, 0.30) 0%,
+            rgba(255, 200, 100, 0.12) 38%,
+            transparent 70%
+        );
+
+    filter: blur(12px);
+
+    transition:
+        opacity 1.8s ease,
+        transform 1.8s ease;
+}
+.lamp-message {
+    margin-bottom: 20px;
+
+    color: rgba(245, 241, 232, 0.65);
+}
+
+.lamp-message p {
+    margin-bottom: 4px;
+
+    font-size: 14px;
+}
+
+.lamp-message span {
+    font-size: 11px;
+    font-style: italic;
+
+    opacity: 0.55;
+}
+
+.rest-button {
+    padding: 12px 24px;
+
+    border: 1px solid rgba(245, 241, 232, 0.25);
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    color: #f5f1e8;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.35s ease,
+        background 0.35s ease;
+}
+
+.rest-button:hover {
+    transform: translateY(-3px);
+
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.rest-button span {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 9px;
+    font-style: italic;
+
+    opacity: 0.5;
+}
+.lamp-world.resting .lamp-light {
+    opacity: 0;
+
+    transform:
+        translateX(-50%)
+        scale(0.7);
+}
+
+.lamp-world.resting .lamp-head {
+    background: rgba(30, 35, 50, 0.75);
+
+    box-shadow: none;
+}
+.goodnight-message,
+.stay-button {
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(8px);
+
+    transition:
+        opacity 1.4s ease,
+        transform 1.4s ease,
+        visibility 1.4s ease;
+}
+
+
+.goodnight-message.show,
+.stay-button.show {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateY(0);
+}
+
+.stay-button.show {
+    pointer-events: auto;
+    position: relative;
+    z-index: 10;
+}
+
+
+.goodnight-message {
+    margin: 18px 0 20px;
+
+    font-size: 15px;
+
+    color: rgba(245, 241, 232, 0.72);
+}
+
+
+.goodnight-message span {
+    display: block;
+
+    margin-top: 6px;
+
+    font-size: 11px;
+    font-style: italic;
+
+    color: rgba(245, 241, 232, 0.38);
+}
+
+
+.stay-button {
+    padding: 10px 22px;
+
+    border: 1px solid rgba(245, 241, 232, 0.16);
+    border-radius: 999px;
+
+    background: transparent;
+
+    color: rgba(245, 241, 232, 0.7);
+
+    cursor: pointer;
+}
+
+
+.stay-button span {
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 9px;
+    font-style: italic;
+
+    opacity: 0.45;
+}
+
+
+.rest-button.fade-away {
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(6px);
+
+    pointer-events: none;
+
+    transition:
+        opacity 1s ease,
+        transform 1s ease,
+        visibility 1s ease;
+}
+
+
+.lamp-ending.silent {
+    opacity: 0;
+
+    transform: translateY(8px);
+
+    pointer-events: none;
+
+    transition:
+        opacity 2s ease,
+        transform 2s ease;
+}
+.letter-overlay {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(2, 6, 20, 0.72);
+    backdrop-filter: blur(8px);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.8s ease,
+        visibility 0.8s ease;
+
+    z-index: 100;
+}
+
+.letter-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+.letter-paper {
+    position: relative;
+
+    width: min(520px, 82vw);
+    min-height: 560px;
+
+    padding: 55px 50px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f1ead9,
+            #e7ddc8
+        );
+
+    color: #363126;
+
+    border-radius: 3px;
+
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.45);
+
+    transform:
+        translateY(30px)
+        scale(0.94);
+
+    opacity: 0;
+
+    transition:
+        transform 0.9s cubic-bezier(.2,.8,.2,1),
+        opacity 0.9s ease;
+}
+
+
+.letter-overlay.open .letter-paper {
+    transform:
+        translateY(0)
+        scale(1);
+
+    opacity: 1;
+}
+
+
+.close-letter {
+    position: absolute;
+
+    top: 18px;
+    right: 22px;
+
+    border: none;
+    background: none;
+
+    color: rgba(50, 45, 35, 0.55);
+
+    font-size: 24px;
+
+    cursor: pointer;
+}
+
+
+.letter-number {
+    margin-bottom: 28px;
+
+    font-size: 10px;
+
+    letter-spacing: 4px;
+
+    color: rgba(50, 45, 35, 0.45);
+}
+
+
+.letter-paper h2 {
+    margin: 0;
+
+    font-size: 27px;
+    font-weight: 400;
+}
+
+
+.letter-french {
+    margin-top: 8px;
+
+    font-size: 12px;
+    font-style: italic;
+
+    color: rgba(50, 45, 35, 0.48);
+}
+
+
+.letter-test {
+    margin-top: 80px;
+
+    text-align: center;
+
+    font-size: 15px;
+
+    color: rgba(50, 45, 35, 0.45);
+}
+.letter {
+    cursor: pointer;
+
+    transition:
+        transform 0.35s ease,
+        opacity 0.35s ease;
+}
+
+.letter:hover {
+    transform: translateY(-8px);
+}
+
+.letter:active {
+    transform: translateY(-3px) scale(0.97);
+}
+
+@media (max-width: 600px) {
+
+    /* ===== 首页 / Welcome ===== */
+
+    .welcome-content {
+        width: 88%;
+        padding: 0 20px;
+    }
+
+    .coordinates {
+        font-size: 10px;
+        letter-spacing: 0.35em;
+    }
+
+    .welcome-content h1 {
+        font-size: 64px;
+        letter-spacing: 0.08em;
+        margin: 24px 0;
+    }
+
+    .chinese {
+        font-size: 18px;
+        line-height: 1.8;
+    }
+
+    .french {
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+    #startButton {
+        margin-top: 34px;
+        padding: 13px 30px;
+    }
+
+}
+/* ===== 手写信照片 ===== */
+
+.letter-photo-wrap {
+    margin-top: 35px;
+
+    width: 100%;
+    max-height: 58vh;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    border-radius: 3px;
+
+    scrollbar-width: thin;
+}
+
+.letter-photo {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    border-radius: 2px;
+}
+/* ===== Handwritten Letters ===== */
+
+.letter-image-wrap {
+    margin-top: 28px;
+    width: 100%;
+    max-height: 55vh;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    border-radius: 3px;
+
+    scrollbar-width: thin;
+}
+
+.letter-image {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    border-radius: 2px;
+
+    opacity: 0;
+
+    animation: revealLetter 0.8s ease forwards;
+}
+
+@keyframes revealLetter {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* ===== Letter scrollbar refinement ===== */
+
+.letter-image-wrap {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(92, 79, 59, 0.22) transparent;
+}
+
+/* Chrome / Edge / Safari */
+.letter-image-wrap::-webkit-scrollbar {
+    width: 5px;
+}
+
+.letter-image-wrap::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.letter-image-wrap::-webkit-scrollbar-thumb {
+    background: rgba(92, 79, 59, 0.20);
+    border-radius: 999px;
+}
+
+.letter-image-wrap::-webkit-scrollbar-thumb:hover {
+    background: rgba(92, 79, 59, 0.35);
+}
+.letter-image-wrap {
+    margin-top: 28px;
+    width: 100%;
+
+    max-height: 55vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    border-radius: 3px;
+}
+.letter-image {
+    display: block;
+    width: 100%;
+    height: auto;
+
+    border-radius: 2px;
+
+    box-shadow:
+        0 8px 24px rgba(45, 37, 25, 0.10),
+        0 2px 6px rgba(45, 37, 25, 0.08);
+}
+/* =========================
+   Rose growing animation
+   ========================= */
+
+.planted-rose {
+    transform-origin: bottom center;
+}
+
+.rose-flower {
+    display: inline-block;
+    transform-origin: bottom center;
+
+    animation: roseGrow 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes roseGrow {
+
+    0% {
+        opacity: 0;
+        transform:
+            translateY(18px)
+            scale(0.15)
+            rotate(-8deg);
+        filter: blur(2px);
+    }
+
+    35% {
+        opacity: 1;
+        transform:
+            translateY(8px)
+            scale(0.45)
+            rotate(4deg);
+        filter: blur(0);
+    }
+
+    70% {
+        transform:
+            translateY(0)
+            scale(1.12)
+            rotate(-2deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform:
+            translateY(0)
+            scale(1)
+            rotate(0deg);
+    }
+}
+/* =========================
+   B612 cinematic landing
+   ========================= */
+
+#planetScene.landing .planet {
+    transform: translate(-140px, -80px) scale(2.6) rotate(4deg);
+    filter: brightness(0.72);
+    transition:
+        transform 1.8s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 1.8s ease;
+}
+
+#planetScene.landing .place {
+    opacity: 0;
+    transform: translateX(-35px);
+    transition:
+        opacity 0.55s ease,
+        transform 0.7s ease;
+}
+
+#planetScene.landing .planet-intro {
+    opacity: 0;
+    transform: translateY(-12px);
+    transition:
+        opacity 0.7s ease,
+        transform 0.9s ease;
+}
+/* =========================
+   B612 atmospheric bloom
+   ========================= */
+
+#planetScene::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 50;
+
+    background:
+        radial-gradient(
+            circle at 78% 82%,
+            rgba(180, 205, 255, 0) 0%,
+            rgba(150, 185, 255, 0) 38%,
+            rgba(205, 220, 255, 0) 58%
+        );
+
+    opacity: 0;
+    transition: opacity 1.25s ease;
+}
+
+#planetScene.landing::after {
+    opacity: 1;
+
+    background:
+        radial-gradient(
+            circle at 78% 82%,
+            rgba(255, 255, 255, 0.88) 0%,
+            rgba(195, 215, 255, 0.62) 24%,
+            rgba(115, 155, 255, 0.30) 48%,
+            rgba(20, 35, 80, 0) 72%
+        );
+}
+/* =========================
+   B612 final atmospheric pass
+   ========================= */
+
+#planetScene .b612-world {
+    transition:
+        filter 0.45s ease,
+        opacity 0.45s ease;
+}
+
+/* 最后阶段：镜头开始失焦 */
+#planetScene.landing-final .b612-world {
+    filter: blur(7px) brightness(1.35);
+}
+
+/* 最后的蓝白闪光 */
+#planetScene.landing-final::after {
+    opacity: 1;
+
+    background:
+        radial-gradient(
+            circle at 72% 72%,
+            rgba(255, 255, 255, 0.98) 0%,
+            rgba(225, 235, 255, 0.92) 30%,
+            rgba(155, 185, 255, 0.70) 58%,
+            rgba(80, 110, 190, 0.32) 78%,
+            rgba(10, 18, 45, 0) 100%
+        );
+
+    transition: opacity 0.3s ease;
+}
+/* =========================
+   The Lamplighter transition
+   ========================= */
+
+#planetScene {
+    transition:
+        filter 1.4s ease,
+        background 1.4s ease;
+}
+
+/* 黄昏降临 */
+#planetScene.lamp-transition {
+    filter:
+        brightness(0.42)
+        saturate(0.65)
+        contrast(1.12);
+}
+
+/* 黑暗中的第一盏灯 */
+#planetScene.lamp-transition::before {
+    content: "";
+    position: absolute;
+
+    left: 68%;
+    top: 48%;
+
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 214, 125, 0);
+
+    box-shadow:
+        0 0 0 rgba(255, 205, 110, 0),
+        0 0 0 rgba(255, 180, 70, 0);
+
+    opacity: 0;
+
+    pointer-events: none;
+    z-index: 60;
+
+    transition:
+        opacity 0.8s ease,
+        background 0.8s ease,
+        box-shadow 1.1s ease;
+}
+
+/* 点灯 */
+#planetScene.lamp-light::before {
+    opacity: 1;
+
+    background: rgba(255, 225, 155, 1);
+
+    box-shadow:
+        0 0 18px rgba(255, 220, 145, 0.95),
+        0 0 55px rgba(255, 190, 90, 0.65),
+        0 0 130px rgba(255, 160, 55, 0.30);
+}
+/* =========================
+   Lamplighter silhouette
+   ========================= */
+
+.lamp-transition-object {
+    position: absolute;
+    left: 68%;
+    top: 48%;
+
+    width: 70px;
+    height: 230px;
+
+    transform: translate(-50%, -10%);
+    opacity: 0;
+
+    pointer-events: none;
+    z-index: 61;
+
+    transition:
+        opacity 0.8s ease,
+        transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 灯柱 */
+.transition-lamp-pole {
+    position: absolute;
+    left: 33px;
+    top: 35px;
+
+    width: 2px;
+    height: 0;
+
+    background: linear-gradient(
+        to bottom,
+        rgba(230, 225, 205, 0.85),
+        rgba(150, 155, 170, 0.35)
+    );
+
+    transition: height 0.9s ease;
+}
+
+/* 灯头 */
+.transition-lamp-head {
+    position: absolute;
+    left: 22px;
+    top: 12px;
+
+    width: 24px;
+    height: 28px;
+
+    border: 1px solid rgba(235, 230, 210, 0.7);
+    border-radius: 4px 4px 8px 8px;
+
+    background: rgba(255, 220, 135, 0);
+
+    opacity: 0;
+
+    transition:
+        opacity 0.6s ease,
+        background 0.8s ease,
+        box-shadow 0.9s ease;
+}
+
+/* 灯的光晕 */
+.transition-lamp-glow {
+    position: absolute;
+    left: 34px;
+    top: 26px;
+
+    width: 8px;
+    height: 8px;
+
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+
+    opacity: 0;
+
+    background: rgba(255, 225, 155, 1);
+
+    transition:
+        opacity 0.8s ease,
+        box-shadow 1s ease;
+}
+
+
+/* 黄昏开始后，路灯轮廓浮现 */
+
+#planetScene.lamp-transition .lamp-transition-object {
+    opacity: 0.45;
+    transform: translate(-50%, -18%);
+}
+
+#planetScene.lamp-transition .transition-lamp-pole {
+    height: 190px;
+}
+
+#planetScene.lamp-transition .transition-lamp-head {
+    opacity: 0.65;
+}
+
+
+/* 真正点亮 */
+
+#planetScene.lamp-light .lamp-transition-object {
+    opacity: 1;
+}
+
+#planetScene.lamp-light .transition-lamp-head {
+    opacity: 1;
+
+    background: rgba(255, 218, 130, 0.88);
+
+    box-shadow:
+        0 0 14px rgba(255, 225, 155, 0.95),
+        0 0 38px rgba(255, 195, 95, 0.55);
+}
+
+#planetScene.lamp-light .transition-lamp-glow {
+    opacity: 1;
+
+    box-shadow:
+        0 0 18px rgba(255, 225, 155, 1),
+        0 0 55px rgba(255, 195, 95, 0.72),
+        0 0 120px rgba(255, 165, 65, 0.42),
+        0 0 220px rgba(255, 140, 40, 0.20);
+}
+/* =========================
+   Rose Garden Transition
+   ========================= */
+
+.rose-transition {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+
+    pointer-events: none;
+    z-index: 70;
+
+    opacity: 0;
+}
+
+.rose-transition .petal {
+    position: absolute;
+
+    width: 22px;
+    height: 34px;
+
+    left: 72%;
+    top: 56%;
+
+    border-radius:
+        75% 15% 70% 25% /
+        70% 25% 75% 30%;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(176, 42, 66, 0.95),
+            rgba(104, 18, 42, 0.92)
+        );
+
+    box-shadow:
+        0 0 12px rgba(170, 45, 70, 0.16);
+
+    opacity: 0;
+
+    transform:
+        translate(0, 0)
+        rotate(0deg)
+        scale(0.5);
+}
+#planetScene.rose-flight .rose-transition {
+    opacity: 1;
+}
+
+#planetScene.rose-flight .petal {
+    animation: rosePetalFlight 1.65s
+               cubic-bezier(0.22, 0.65, 0.35, 1)
+               forwards;
+}
+
+
+/* 每片花瓣稍微错开 */
+
+#planetScene.rose-flight .petal-1 {
+    animation-delay: 0s;
+}
+
+#planetScene.rose-flight .petal-2 {
+    animation-delay: 0.08s;
+    left: 76%;
+    top: 61%;
+}
+
+#planetScene.rose-flight .petal-3 {
+    animation-delay: 0.15s;
+    left: 68%;
+    top: 63%;
+}
+
+#planetScene.rose-flight .petal-4 {
+    animation-delay: 0.22s;
+    left: 81%;
+    top: 53%;
+}
+
+#planetScene.rose-flight .petal-5 {
+    animation-delay: 0.30s;
+    left: 64%;
+    top: 57%;
+}
+
+#planetScene.rose-flight .petal-6 {
+    animation-delay: 0.38s;
+    left: 73%;
+    top: 68%;
+}
+
+#planetScene.rose-flight .petal-7 {
+    animation-delay: 0.45s;
+    left: 84%;
+    top: 65%;
+}
+
+#planetScene.rose-flight .petal-8 {
+    animation-delay: 0.52s;
+    left: 78%;
+    top: 48%;
+}
+@keyframes rosePetalFlight {
+
+    0% {
+        opacity: 0;
+
+        transform:
+            translate(0, 0)
+            rotate(0deg)
+            scale(0.35);
+    }
+
+    18% {
+        opacity: 0.9;
+    }
+
+    55% {
+        opacity: 1;
+
+        transform:
+            translate(-170px, -80px)
+            rotate(160deg)
+            scale(1.1);
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translate(-620px, -260px)
+            rotate(430deg)
+            scale(2.6);
+    }
+}
+#planetScene.rose-flight .planet {
+    filter:
+        brightness(0.78)
+        saturate(0.72);
+
+    transition:
+        filter 1.5s ease;
+}
+
+#planetScene.rose-flight .planet-intro {
+    opacity: 0.18;
+
+    transition:
+        opacity 0.8s ease;
+}
+
+#planetScene.rose-flight .place {
+    opacity: 0;
+
+    transition:
+        opacity 0.7s ease;
+}

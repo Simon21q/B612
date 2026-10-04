@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>B612</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="stars"></div>
+
+    <main class="world">
+
+        <section class="welcome scene active" id="welcomeScene">
+
+            <p class="coordinates">
+                ASTEROID · B612
+            </p>
+
+            <h1>B612</h1>
+
+            <p class="chinese">
+                今晚，去一顆很小的星球休息一下
+            </p>
+
+            <p class="french">
+                Ce soir, allons nous reposer
+                sur une toute petite planète.
+            </p>
+
+            <button id="startButton">
+                開始旅程
+                <span>Commencer le voyage</span>
+            </button>
+
+        </section>
+        <section class="planet-scene scene" id="planetScene">
+            <div class="lamp-transition-object">
+    <div class="transition-lamp-glow"></div>
+    <div class="transition-lamp-head"></div>
+    <div class="transition-lamp-pole"></div>
+</div>
+<div class="rose-transition" aria-hidden="true">
+    <span class="petal petal-1"></span>
+    <span class="petal petal-2"></span>
+    <span class="petal petal-3"></span>
+    <span class="petal petal-4"></span>
+    <span class="petal petal-5"></span>
+    <span class="petal petal-6"></span>
+    <span class="petal petal-7"></span>
+    <span class="petal petal-8"></span>
+</div>
+
+    <div class="planet-intro">
+        <p class="planet-label">
+            BIENVENUE · B612
+        </p>
+
+        <h2>歡迎來到 B612</h2>
+
+        <p class="planet-subtitle">
+            Bienvenue sur B612.
+        </p>
+    </div>
+
+
+    <div class="b612-world">
+
+        <div class="planet-glow"></div>
+
+        <div class="planet">
+
+            <div class="place fox-place active" ...>
+                <span class="place-number">01</span>
+
+        <div class="place-info">
+            <p>狐狸</p>
+            <span>LE RENARD</span>
+        </div>
+            </div>
+
+            <div class="place rose-place">
+                <span class="place-number">02</span>
+
+<div class="place-info">
+    <p>玫瑰園</p>
+    <span>LA ROSERAIE</span>
+</div>
+            </div>
+
+            <div class="place lamp-place">
+    <span class="place-number">03</span>
+
+    <div class="place-info">
+        <p>點燈人</p>
+        <span>L'ALLUMEUR</span>
+    </div>
+</div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<section class="fox-scene scene" id="foxScene">
+
+    <button class="back-button" id="foxBackButton">
+        ← 返回 B612
+        <span>Retour à B612</span>
+    </button>
+
+    <div class="fox-content">
+
+        <p class="scene-label">
+            LE RENARD
+        </p>
+
+        <h2>狐狸替你保管了一些東西</h2>
+
+        <p class="scene-french">
+            Le renard a gardé quelques petites choses pour toi.
+        </p>
+
+        <div class="letters">
+
+            <div class="letter" data-letter="1">
+                <div class="envelope">✉</div>
+                <span>01</span>
+            </div>
+
+            <div class="letter" data-letter="2">
+                <div class="envelope">✉</div>
+                <span>02</span>
+            </div>
+
+            <div class="letter" data-letter="3">
+                <div class="envelope">✉</div>
+                <span>03</span>
+            </div>
+
+        </div>
+
+    </div>
+<div class="letter-overlay" id="letterOverlay">
+
+    <div class="letter-paper">
+
+        <button class="close-letter" id="closeLetter">×</button>
+
+        <div class="letter-content" id="letterContent">
+
+            <p class="letter-number">LETTRE · 01</p>
+
+            <h2>給今天很累的你</h2>
+
+            <p class="letter-french">
+                Pour toi, après une longue journée.
+            </p>
+
+            <div class="letter-photo-wrap">
+    <img
+        src="images/letter-01.jpg"
+        alt="第一封手寫信"
+        class="letter-photo"
+    >
+</div>
+
+        </div>
+
+    </div>
+
+</div>
+</section>
+<section class="rose-scene scene" id="roseScene">
+
+    <button class="back-button" id="roseBackButton">
+        ← 返回 B612
+        <span>Retour à B612</span>
+    </button>
+
+    <div class="rose-content">
+
+        <p class="scene-label">
+            LA ROSERAIE
+        </p>
+
+        <h2>歡迎來到你的玫瑰園</h2>
+
+        <p class="scene-french">
+            Bienvenue dans ta roseraie.
+        </p>
+
+        <div class="garden" id="garden">
+
+            <p class="empty-garden" id="emptyGarden">
+                這裡還沒有玫瑰
+                <span>Il n'y a pas encore de roses ici.</span>
+            </p>
+
+        </div>
+
+        <button class="plant-button" id="plantButton">
+            ＋ 種下一朵玫瑰
+            <span>Planter une rose</span>
+        </button>
+        <div class="rose-modal" id="roseModal">
+
+    <div class="rose-note">
+
+        <button class="close-note" id="closeRoseModal">
+            ×
+        </button>
+
+        <p class="note-label">
+            UNE PETITE PENSÉE
+        </p>
+
+        <h3>今天有什麼想留在這裡的嗎</h3>
+
+        <p class="note-french">
+            Y a-t-il quelque chose que tu aimerais laisser ici aujourd'hui ?
+        </p>
+
+        <textarea
+            id="roseText"
+            maxlength="300"
+            placeholder="寫在這裡……"
+        ></textarea>
+
+        <button class="save-rose" id="saveRose">
+            種下它
+            <span>La planter</span>
+        </button>
+
+    </div>
+
+</div>
+
+    </div>
+
+</section>
+<section class="lamp-scene scene" id="lampScene">
+
+    <button class="back-button" id="lampBackButton">
+        ← 返回 B612
+        <span>Retour à B612</span>
+    </button>
+
+    <div class="lamp-content">
+
+        <p class="scene-label">
+            L'ALLUMEUR DE RÉVERBÈRES
+        </p>
+
+        <h2>今天已經夠辛苦了</h2>
+
+        <p class="scene-french">
+            Tu en as déjà assez fait pour aujourd'hui.
+        </p>
+
+        <div class="lamp-world">
+
+            <div class="lamp-light" id="lampLight"></div>
+
+            <div class="street-lamp">
+                <div class="lamp-head"></div>
+                <div class="lamp-pole"></div>
+                <div class="lamp-base"></div>
+            </div>
+
+        </div>
+
+        <div class="lamp-ending" id="lampEnding">
+
+    <div class="lamp-message" id="lampMessage">
+        <p>點燈人還在工作</p>
+        <span>L'allumeur travaille encore.</span>
+    </div>
+
+    <p class="goodnight-message" id="goodnightMessage">
+        晚安，明天再點燈吧
+        <span>Bonne nuit. Nous rallumerons la lampe demain.</span>
+    </p>
+
+    <button class="rest-button" id="restButton">
+        替點燈人熄燈
+        <span>Éteindre la lampe pour lui</span>
+    </button>
+
+    <button class="stay-button" id="stayButton">
+        在這裡坐一會兒
+        <span>Rester ici un moment</span>
+    </button>
+
+</div>
+
+    </div>
+
+</section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
