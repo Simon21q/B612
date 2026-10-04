@@ -1881,3 +1881,16 @@ ene h2
     transition:
         opacity 0.7s ease;
 }
+/* =========================
+   Mobile B612
+   ========================= */
+
+@media (max-width: 768px) {
+
+    .fox-place,
+    .rose-place,
+    .lamp-place {
+        left: -150px;
+    }
+
+}
